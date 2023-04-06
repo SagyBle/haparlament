@@ -1,33 +1,18 @@
 import React, { useState } from "react";
-import "../../styles.css/SubmitToServer.css";
+import "../../styles.css/SubmitFeelings.css";
 
-function SubmitToServer({
+function SubmitFeelings({
   imgID,
   selectedEmotionId,
-  optionalUserParagraph,
-  user,
-  setWaiting,
-  handlePass,
   setjsonObject,
   setSlide,
+  slide,
+  handlePass,
 }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!selectedEmotionId) return;
 
-    // Get the user ID from Google auth
-    // const userID = user.id; // Replace with actual user ID from Google auth
-
-    // JSON creation
-    // const jsonObject = {
-    //   userID,
-    //   imgID,
-    //   selectedEmotionId,
-    //   optionalUserParagraph,
-    // };
-    // setWaiting(true);
-    // Log the JSON object to the console
-    // console.log(jsonObject);
     setjsonObject((prevState) => {
       return {
         ...prevState,
@@ -35,7 +20,7 @@ function SubmitToServer({
         Feeling: selectedEmotionId.toString(),
       };
     });
-    setSlide(1);
+    setSlide(slide + 1);
   };
 
   return (
@@ -47,7 +32,12 @@ function SubmitToServer({
         >
           דלג
         </button>
-        <button className="lets-talk-button" onClick={handleSubmit}>
+        <button
+          className={`lets-talk-button ${
+            selectedEmotionId ? null : "button-disabled"
+          }`}
+          onClick={handleSubmit}
+        >
           בואו נדבר
         </button>
       </div>
@@ -55,4 +45,4 @@ function SubmitToServer({
   );
 }
 
-export default SubmitToServer;
+export default SubmitFeelings;
