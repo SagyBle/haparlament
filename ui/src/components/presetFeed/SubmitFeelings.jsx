@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
+import { useNavigate } from "react-router-dom";
 import "../../styles.css/SubmitFeelings.css";
 
 function SubmitFeelings({
@@ -9,6 +10,8 @@ function SubmitFeelings({
   slide,
   handlePass,
 }) {
+  const navigate = useNavigate();
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!selectedEmotionId) return;
@@ -21,6 +24,7 @@ function SubmitFeelings({
       };
     });
     setSlide(slide + 1);
+    navigate("/DetailsForm");
   };
 
   return (

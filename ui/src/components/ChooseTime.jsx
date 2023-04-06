@@ -1,10 +1,12 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Popup from "../components/Popup";
 import "../../src/styles.css/ChooseTime.css";
 import { TwoLinesLeft } from "../styles.css/icons.svg/icons";
 import { postSessionRequest } from "../utils/session_request";
 
 function ChooseTime({ setjsonObject, jsonObject, setSlide, slide }) {
+  const navigate = useNavigate();
   const [days] = useState([
     { day: "ראשון", isPreesed: false },
     { day: "שני", isPreesed: false },
@@ -37,11 +39,13 @@ function ChooseTime({ setjsonObject, jsonObject, setSlide, slide }) {
   };
 
   const [showPopup, setShowPopup] = useState(false);
+  const [showChooseTimePopUp, setShowChooseTimePopUp] = useState(false);
 
   const handleConfirm = () => {
     console.log("Confirmed!");
     setShowPopup(false);
     setSlide(0);
+    navigate("/ImageContent");
   };
 
   const handleCancel = () => {
@@ -49,10 +53,18 @@ function ChooseTime({ setjsonObject, jsonObject, setSlide, slide }) {
     setShowPopup(false);
   };
 
+  const handleChooseTime = () => {
+    setShowChooseTimePopUp(false);
+  };
+
   const handleSubmit = (jsonObject) => {
-    console.log("sagy log: ", jsonObject);
-    postSessionRequest(jsonObject);
-    setShowPopup(true);
+    if (jsonObject.HourRange === "") {
+      setShowChooseTimePopUp(true);
+    } else {
+      console.log("sagy log: ", jsonObject);
+      postSessionRequest(jsonObject);
+      setShowPopup(true);
+    }
   };
 
   return (
@@ -118,6 +130,18 @@ function ChooseTime({ setjsonObject, jsonObject, setSlide, slide }) {
               text="בקרוב ניצור איתך קשר בוואטסאפ ונקשר אותך לשיחה עם אדם עם תחושות שונות בנושא שבחרת"
               handleConfirm={handleConfirm}
               handleCancel={handleCancel}
+              keepCancelButton={true}
+            />
+          </>
+        )}
+        {showChooseTimePopUp && (
+          <>
+            <div className="darken"></div>
+            <Popup
+              title="אנא בחר זמן שבו תהייה פנוי לשיחה"
+              text="כדי שנוכל ליצור איתך קשר בזמן שמתאים לך"
+              handleConfirm={handleChooseTime}
+              handleCancel={handleChooseTime}
             />
           </>
         )}

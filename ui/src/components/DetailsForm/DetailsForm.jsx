@@ -1,9 +1,12 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "../../styles.css/DetailsForm.css";
 import { LeftArrow } from "../../styles.css/icons.svg/icons";
 import { TwoLinesRight } from "../../styles.css/icons.svg/icons";
 
 function DetailsForm({ setjsonObject, setSlide, slide }) {
+  const navigate = useNavigate();
+
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
 
@@ -15,6 +18,7 @@ function DetailsForm({ setjsonObject, setSlide, slide }) {
       return { ...prevState, PhoneNumber: phone, UserName: name };
     });
     setSlide(slide + 1);
+    navigate("/ChooseTime");
   };
 
   return (

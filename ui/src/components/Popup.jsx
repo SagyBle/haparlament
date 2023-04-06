@@ -1,7 +1,7 @@
 import React from "react";
 import "../styles.css/Popup.css";
 
-function Popup({ title, text, handleConfirm, handleCancel }) {
+function Popup({ title, text, handleConfirm, handleCancel, keepCancelButton }) {
   return (
     <div className="popup">
       <h4 className="popup-header">{title}</h4>
@@ -10,9 +10,11 @@ function Popup({ title, text, handleConfirm, handleCancel }) {
         <button className="popup-button bold" onClick={handleConfirm}>
           אישור
         </button>
-        <button className="popup-button" onClick={handleCancel}>
-          ביטול
-        </button>
+        {keepCancelButton && (
+          <button className="popup-button" onClick={handleCancel}>
+            ביטול
+          </button>
+        )}
       </div>
     </div>
   );
